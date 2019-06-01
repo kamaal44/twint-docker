@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/bin/sh
 
 echo "case $1"
@@ -41,3 +42,7 @@ case "$1" in
   	exec bash
 	;;
 esac
+=======
+#!/bin/bash
+$@
+>>>>>>> 8bba455a67283c8e3f19524b32f35fa831184811
