@@ -1,0 +1,15 @@
+numpy
+pandas
+tqdm
+requests
+lxml
+twint
+aiohttp-socks
+langdetect
+nltk
+# graph-tool
+polyglot
+pyicu
+pycld2
+morfessor
+emoji
