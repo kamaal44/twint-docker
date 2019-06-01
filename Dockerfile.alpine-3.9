@@ -1,8 +1,21 @@
 FROM alpine:3.9
 MAINTAINER Luc  Michalski<luc.michalski@protonmail.com>
 
-COPY script/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Supercronic install settings
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.1.8/supercronic-linux-amd64 \
+    SUPERCRONIC=supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=be43e64c45acd6ec4fce5831e03759c89676a0ea
+
+# Install SeaweedFS and Supercronic ( for cron job mode )
+# Tried to use curl only (curl -o /tmp/linux_amd64.tar.gz ...), however it turned out that the following tar command failed with "gzip: stdin: not in gzip format"
+RUN apk add --no-cache --virtual build-dependencies --update curl ca-certificates && \
+    curl -fsSLO "$SUPERCRONIC_URL" && \
+    echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - && \
+    chmod +x "$SUPERCRONIC" && \
+    mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" && \
+    ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic && \
+    apk del build-dependencies && \
+    rm -rf /tmp/*
 
 RUN apk add --no-cache python3 make automake gcc g++ subversion python3-dev git && \
     python3 -m ensurepip && \
@@ -13,6 +26,9 @@ RUN apk add --no-cache python3 make automake gcc g++ subversion python3-dev git 
     rm -r /root/.cache && \
     pip install twint && \
     pip install --upgrade -e git+https://github.com/twintproject/twint.git@origin/master#egg=twint && \
+
+COPY script/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # remove cache and unused packages.
 
