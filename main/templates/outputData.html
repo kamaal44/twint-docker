@@ -1,0 +1,234 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css'>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <style>
+        .box{
+            margin-top : 5%;
+            margin-right : 17%;
+            margin-left : 17%;
+            margin-bottom : 5%;
+        }
+        .box-heading{
+            color : rgb(47, 111, 239);
+            text-align : center;
+        }
+        .result{
+            margin-top : 20px;
+        }
+        .details {
+            margin-top:5%;
+        }
+        canvas {
+            height: 500px;
+            width :auto;
+            margin: auto;
+            margin-top : 30px;
+        }
+        .fal {
+            margin-top : 3%; 
+        }
+        .anomalous {
+            color : red;
+        }
+        .nonanomalous {
+            color : green;
+        }
+        .suspected {
+            color : orange;
+        }
+    </style>
+    
+    <title>Tweety App</title>
+</head>
+<body>
+
+    <section class="nav hero is-info" >
+            <div class="hero-body">
+              <div class="container">
+                <h1 class="title is-1">
+                  TWEEZY
+                </h1>
+              </div>
+            </div>
+    </section>
+<!-- Displays stat -->
+<nav class="level details">
+    <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">URL RANK</p>
+          <p class="title" id="url">{{ urlRank }}</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">SIMILARITY RANK</p>
+          <p class="title" id="similarity">{{ similarity }}</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">WOT RANK</p>
+          <p class="title" id="wot">{{wot}}</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="title is-1">{{name}}</p>
+        </div>
+      </div>
+    <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Time RANK</p>
+          <p class="title" id="time">{{ time }}</p>
+        </div>
+      </div>
+    <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">ADULT CONTENT RANK</p>
+          <p class="title" id="adult">{{ adult }}</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">FAL VALUE</p>
+          <p class="title">{{fal}}</p>
+        </div>
+      </div>
+     
+  </nav>
+   <div class="container is-fluid">
+       <div class="columns">
+           <div class="column">
+                {% if type == 2%}
+                <!-- Anomalous icon  -->
+                <div class="has-text-centered">
+                <p class="title is-1 anomalous">Anomalous</p>
+                <img src="{% static "main/anomalous.svg" %}" width="300" height="300">
+                </div>
+               {% elif type == 0 %}
+                <!-- Non anomaous icon -->
+                <div class="has-text-centered">
+                <p class="title is-1 nonanomalous">Non Anomalous</p>
+                <img src="{% static "main/NonAnomalous.svg" %}" width="300" height="300">
+                </div>
+                {% elif type == -1 %}
+                <!-- User Not Found icon -->
+                <div class="has-text-centered">
+                <p class="title is-1 nonanomalous">User Not Found!</p>
+                <img src="{% static "main/userNotFound.png" %}" width="300" height="300">
+                </div>
+               {% else %}
+                <!-- Suspected icon -->
+                <div class="has-text-centered">
+                <p class="title is-1 suspected">Suspected</p>
+                <img src="{% static "main/suspect.svg" %}" width="300" height="300">
+                </div>
+               {% endif %}
+               
+           </div>
+       </div>
+   </div>
+   <div class="fal container  has-text-centered">
+        <p class="title is-3">FAL VALUE = {{fal}}/10</p>
+        <progress class="progress is-info" value="{{fal}}" max="10">{{fal}}</progress>
+   </div>
+   <div class="canvas container  has-text-centered">
+        <canvas id="myChart"></canvas>
+   </div>
+<!-- Display stat end  -->
+    <!-- <div class="box">
+        <h4 id="details" class="box-heading title is-3">Details</h4>
+        <article class="message is-link">
+            <div class="message-body">
+                <h1 class="title is-5">Username : {{ name }}</h1>
+            </div>
+        </article>
+        <article class="message is-info">
+            <div class="message-body">
+                <h1 class="title is-6">Url Rank : {{ urlRank }}</h1>
+            </div>
+            <div class="message-body">
+                <h1 class="title is-6">Similarity Rank : {{ similarity }}</h1>
+            </div>
+            <div class="message-body">
+                <h1 class="title is-6">WOT Rank : {{ wot }}</h1>
+            </div>
+            <div class="message-body">
+                <h1 class="title is-6">Adult Content Rank : {{ adult }}</h1>
+            </div>
+            <div class="message-body">
+                <h1 class="title is-6">Time Rank : {{ time }}</h1>
+            </div>       
+        </article>
+        <article class="message is-link">
+            <div class="result columns">
+                <div class="column">
+                <div class="message-body">
+                    <h1 class="title is-5">FAL Value : {{ fal }}</h1>
+                </div>
+                </div>
+                <div class="column">
+                <div class="message-body">
+                    <h1 class="title is-5">Type : {{ type }}</h1>
+                </div>
+                </div>
+            </div> 
+        </article>
+    </div> -->
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<script>
+    var ctx = document.getElementById("myChart");
+    var url = {{urlRank}};
+    var similarity = {{similarity}}; 
+    var wot = {{wot}};
+    var time = {{time}};
+    var adult = {{adult}};
+    console.log(wot);
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["URL RANK", "SIMILARITY RANK", "WOT RANK", "TIME RANK", "ADULT CONTENT RANK"],
+        datasets: [{
+            label: 'Ranking',
+            data: [url, similarity, wot, time, adult],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    max:10
+                }
+            }]
+        },
+        responsive : false
+    }
+});
+</script>
+</html>
