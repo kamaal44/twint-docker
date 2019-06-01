@@ -1,7 +1,10 @@
 version: '3'
 services:
+
   twint:
-    build: .
+    build:
+      file: Dockerfile.alpine-3.9
+      context: .
     container_name: twint
   
   elasticsearch:
@@ -28,8 +31,23 @@ services:
     ports:
       - 5601:5601
 
+  relay:
+    image: chriswayg/tor-alpine
+    container_name: relay
+    init: true
+    restart: always
+    network_mode: host
+    environment:
+      TOR_NICKNAME: Tor4
+      CONTACT_EMAIL: tor4@example.org
+    volumes:
+      - relay01:/var/lib/tor/
+      - ./torrc:/etc/tor/torrc  
+
 volumes:
   esdata01:
+    driver: local
+  relay01:
     driver: local
 
 networks:
