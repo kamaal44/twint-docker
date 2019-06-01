@@ -1,0 +1,98 @@
+/* app/static/css/style.css */
+.home-header {
+    line-height: 1;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .home-header-logo {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    font-size: 2.25rem;
+  }
+  
+  .home-header-logo:hover {
+    text-decoration: none;
+  }
+
+body, h1, h2, h3{
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    color: #0F3C53; 
+}
+
+a, .navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
+    color: #0F3C53;
+  }
+  a:hover{
+    color: #EA6953;
+  }
+
+.container {
+  max-width: 960px;
+}
+
+.alert-info {
+    width: 50%;
+    margin: auto;
+    color: #687430;
+    background-color: #e6ecca;
+    border-color: #aec251;
+}
+
+.btn-default{
+    background-color: #0F3C53;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.intro-divider {
+    width: 400px;
+    border-top: 1px solid #2e2e1f;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.lead {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.topnav {
+    font-size: 14px;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -4em;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 70%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ .card:hover h1>a>i:hover, h5>a {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    color: #EA6953;
+ }
+
+.card-deck .card {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  min-width: 300px;
+}
