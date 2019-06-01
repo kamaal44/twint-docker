@@ -3,9 +3,11 @@ services:
 
   twint:
     build:
-      file: Dockerfile.alpine-3.9
+      dockerfile: Dockerfile.alpine-3.9
       context: .
     container_name: twint
+    volumes:
+    - $PWD/shared/data/twint:/srv/twint
   
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
@@ -34,7 +36,6 @@ services:
   relay:
     image: chriswayg/tor-alpine
     container_name: relay
-    init: true
     restart: always
     network_mode: host
     environment:

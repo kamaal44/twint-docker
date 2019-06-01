@@ -2,7 +2,8 @@ FROM alpine:3.9
 MAINTAINER Luc  Michalski<luc.michalski@protonmail.com>
 
 # Supercronic install settings
-ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.1.8/supercronic-linux-amd64 \
+ENV SUPERCRONIC_REL=${SUPERCRONIC_REL:-"v0.1.8"}
+ENV	SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_REL}/supercronic-linux-amd64 \
     SUPERCRONIC=supercronic-linux-amd64 \
     SUPERCRONIC_SHA1SUM=be43e64c45acd6ec4fce5831e03759c89676a0ea
 
@@ -17,7 +18,7 @@ RUN apk add --no-cache --virtual build-dependencies --update curl ca-certificate
     apk del build-dependencies && \
     rm -rf /tmp/*
 
-RUN apk add --no-cache python3 make automake gcc g++ subversion python3-dev git && \
+RUN apk add --no-cache python3 make automake gcc g++ subversion python3-dev git libffi-dev && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \
@@ -25,9 +26,9 @@ RUN apk add --no-cache python3 make automake gcc g++ subversion python3-dev git 
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -r /root/.cache && \
     pip install twint && \
-    pip install --upgrade -e git+https://github.com/twintproject/twint.git@origin/master#egg=twint && \
+    pip install --upgrade -e git+https://github.com/twintproject/twint.git@origin/master#egg=twint
 
-COPY script/entrypoint.sh /entrypoint.sh
+COPY scripts/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # remove cache and unused packages.
