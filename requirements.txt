@@ -1,0 +1,9 @@
+python-telegram-bot>=10.1.0
+fullcontact.py
+twint
+phonenumbers
+pymongo
+python-whois
+gglsbl
+python-telegram-bot[socks]
+
