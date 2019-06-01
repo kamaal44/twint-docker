@@ -1,0 +1,13 @@
+aiohttp
+aiodns
+beautifulsoup4
+cchardet
+elasticsearch
+future
+requests
+requests_oauthlib
+python-twitter
+twint
+tweepy
+telegram-send
+python-daemon
