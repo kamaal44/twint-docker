@@ -1,102 +1,51 @@
-version: "3"
-
+---
+version: '3.6'
 services:
 
-  #############################
-  # TWINT                     #
-  #############################
   twint:
     build: .
     container_name: twint
-  
-  #############################
-  # TOR PRIVOXY               #
-  #############################  
+
   tor-privoxy:
     restart: always
-    container_name: torp
+    container_name: tw_torp
     image: dockage/tor-privoxy:latest
     ports:
     - "9050:9050" # Tor proxy
     - "9051:9051" # Tor control port
     - "8118:8118" # Privoxy
-
-  #############################
-  # ELASTICSEARCH MASTER NODE #
-  #############################
-  master:
-    restart: unless-stopped
-    image: blacktop/elasticsearch:7.3
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1
+    container_name: tw_elastic
     environment:
+      - node.name=elasticsearch
+      - cluster.initial_master_nodes=elasticsearch
       - cluster.name=docker-cluster
-      - node.master=true
-      - node.ingest=false
-      - node.data=false
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - data:/usr/share/elasticsearch/data
-    networks:
-      - elastic
-
-  ####################################
-  # ELASTICSEARCH CLIENT/INGEST NODE #
-  ####################################
-  ingest:
-    restart: unless-stopped
-    image: blacktop/elasticsearch:7.3
-    environment:
-      - cluster.name=docker-cluster
-      - node.master=true
-      - node.ingest=true
-      - node.data=false
-      - discovery.zen.ping.unicast.hosts=master
+      - esdata01:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
-    links:
-     - master:elastic-master
-    networks:
-      - elastic
+      - 9200:9200
 
-  ###########################
-  # ELASTICSEARCH DATA NODE #
-  ###########################
-  data:
-    restart: unless-stopped
-    image: blacktop/elasticsearch:7.3
-    environment:
-      - ES_JAVA_OPTS=-Xms2g -Xmx2g
-      - cluster.name=docker-cluster
-      - node.master=false
-      - node.ingest=false
-      - node.data=true
-      - discovery.zen.ping.unicast.hosts=master
-    links:
-     - master:elastic-master
-    # volumes:
-    #   - data:/usr/share/elasticsearch/data
-    networks:
-      - elastic
-
-  ###############
-  # KIBANA NODE #
-  ###############
   kibana:
-    image: blacktop/kibana:7.3
+    image: docker.elastic.co/kibana/kibana:7.3.1
+    container_name: tw_kibana
     ports:
-      - "80:5601"
-    links:
-     - ingest:elasticsearch
-    networks:
-      - elastic
+      - 5601:5601
 
-#############################
-# ELASTICSEARCH DATA VOLUME #
-#############################
 volumes:
-  data:
+  esdata01:
+    driver: local
 
-################################
-# ELASTICSEARCH BRIDGE NETWORK #
-################################
 networks:
-  elastic:
-    driver: bridge
+  default:
+    external:
+      name: nw_twint
+
+      
