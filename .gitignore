@@ -2,3 +2,4 @@ extras
 extras/
 extras/*
 extras/**
+.DS_Store
