@@ -9,3 +9,7 @@
 Dockerfile
 data
 data/**
+extras
+extras/
+extras/*
+extras/**
