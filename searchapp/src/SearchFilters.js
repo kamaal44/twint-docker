@@ -6,52 +6,39 @@ import {
 	RangeSlider,
 } from '@appbaseio/reactivesearch';
 
-const SearchFilters = ({ currentTopics, setTopics, visible }) => (
+const SearchFilters = ({ currentHashtags, setHashtags, visible }) => (
 	<div className={`flex column filters-container ${!visible ? 'hidden' : ''}`}>
 		<div className="child m10">
 			<MultiDropdownList
-				componentId="language"
-				dataField="language.keyword"
-				placeholder="Select languages"
-				title="Language"
-				filterLabel="Language"
-			/>
-		</div>
-		<div className="child m10">
-			<MultiDropdownList
-				componentId="topics"
-				dataField="topics.keyword"
-				placeholder="Select topics"
-				title="Repo Topics"
-				filterLabel="Topics"
+				componentId="hashtags"
+				dataField="hashtags.keyword"
+				placeholder="Select hashtags"
+				title="Tweet Hashtags"
+				filterLabel="Hashtags"
 				size={1000}
 				queryFormat="and"
-				defaultSelected={currentTopics}
-				onValueChange={setTopics}
-			/>
-		</div>
-		<div className="child m10">
-			<SingleDropdownRange
-				componentId="pushed"
-				dataField="pushed"
-				placeholder="Repo last active"
-				title="Last Active"
-				filterLabel="Last Active"
-				data={[
-					{ start: 'now-1M', end: 'now', label: 'Last 30 days' },
-					{ start: 'now-6M', end: 'now', label: 'Last 6 months' },
-					{ start: 'now-1y', end: 'now', label: 'Last year' },
-				]}
+				defaultSelected={currentHashtags}
+				onValueChange={setHashtags}
 			/>
 		</div>
 		<div className="child m10">
 			<SingleDropdownRange
 				componentId="created"
 				dataField="created"
-				placeholder="Repo created"
+				placeholder="Tweet published"
 				title="Created"
 				filterLabel="Created"
 				data={[
+					{
+						start: '2019-01-01T00:00:00Z',
+						end: '2019-12-31T23:59:59Z',
+						label: '2019',
+					},
+					{
+						start: '2018-01-01T00:00:00Z',
+						end: '2018-12-31T23:59:59Z',
+						label: '2018',
+					},
 					{
 						start: '2017-01-01T00:00:00Z',
 						end: '2017-12-31T23:59:59Z',
@@ -112,14 +99,14 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		</div>
 		<div className="child m10">
 			<RangeSlider
-				componentId="stars"
-				title="Repo Stars"
-				dataField="stars"
+				componentId="nretweets"
+				title="Retweets"
+				dataField="nretweets"
 				range={{ start: 0, end: 300000 }}
 				showHistogram={false}
 				rangeLabels={{
-					start: '0 Stars',
-					end: '300K Stars',
+					start: '0 retweets',
+					end: '300K retweets',
 				}}
 				innerClass={{
 					label: 'range-label',
@@ -128,14 +115,30 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		</div>
 		<div className="child m10">
 			<RangeSlider
-				componentId="forks"
-				title="Repo Forks"
-				dataField="forks"
+				componentId="nlikes"
+				title="Likes"
+				dataField="nlikes"
 				range={{ start: 0, end: 180500 }}
 				showHistogram={false}
 				rangeLabels={{
-					start: '0 Forks',
-					end: '180K Forks',
+					start: '0 Likes',
+					end: '180K Likes',
+				}}
+				innerClass={{
+					label: 'range-label',
+				}}
+			/>
+		</div>
+		<div className="child m10">
+			<RangeSlider
+				componentId="nreplies"
+				title="Replies"
+				dataField="nreplies"
+				range={{ start: 0, end: 180500 }}
+				showHistogram={false}
+				rangeLabels={{
+					start: '0 Replies',
+					end: '180K Replies',
 				}}
 				innerClass={{
 					label: 'range-label',
@@ -146,8 +149,8 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 );
 
 SearchFilters.propTypes = {
-	currentTopics: PropTypes.arrayOf(PropTypes.string),
-	setTopics: PropTypes.func,
+	currentHashtags: PropTypes.arrayOf(PropTypes.string),
+	setHashtags: PropTypes.func,
 	visible: PropTypes.bool,
 };
 

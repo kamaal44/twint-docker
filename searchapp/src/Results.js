@@ -2,7 +2,7 @@ import React from 'react';
 import { SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
-import Topic from './Topic';
+import Hashtag from './Hashtag';
 
 const onResultStats = (results, time) => (
 	<div className="flex justify-end">
@@ -10,10 +10,9 @@ const onResultStats = (results, time) => (
 	</div>
 );
 
-const onData = (data, currentTopics, toggleTopic) => (
+const onData = (data, currentHashtags, toggleHashtag) => (
 	<div className="result-item" key={data.username}>
 		<div className="flex justify-center align-center result-card-header">
-			<img className="avatar" src={data.avatar} alt="User avatar" />
 			<a className="link" href={data.link} target="_blank" rel="noopener noreferrer">
 				<div className="flex wrap">
 					<div>{data.username}/</div>
@@ -26,13 +25,13 @@ const onData = (data, currentTopics, toggleTopic) => (
 			{
 				data.hashtags.slice(0, 7)
 					.map(item => (
-						<Topic
+						<Hashtag
 							key={item}
-							active={currentTopics.includes(item)}
-							toggleTopic={toggleTopic}
+							active={currentHashtags.includes(item)}
+							toggleHashtag={toggleHashtag}
 						>
 							{item}
-						</Topic>
+						</Hashtag>
 					))
 			}
 		</div>
@@ -44,22 +43,21 @@ const onData = (data, currentTopics, toggleTopic) => (
 	</div>
 );
 
-const Results = ({ toggleTopic, currentTopics }) => (
+const Results = ({ toggleHashtag, currentHashtags }) => (
 	<div className="result-list">
 		<SelectedFilters className="m1" />
 		<ReactiveList
 			componentId="results"
-			dataField="name"
-			onData={data => onData(data, currentTopics, toggleTopic)}
+			dataField="id"
+			onData={data => onData(data, currentHashtags, toggleHashtag)}
 			onResultStats={onResultStats}
 			react={{
-				and: ['language',
-							'hashtags',
+				and: [		'hashtags',
 							'date',
 							'created_at',
 							'nlikes',
 							'nreplies',
-							'retweet'],
+							'nretweets'],
 			}}
 			pagination
 			innerClass={{
@@ -76,53 +74,44 @@ const Results = ({ toggleTopic, currentTopics }) => (
 					sortBy: 'desc',
 				},
 				{
-					label: 'Most Stars',
-					dataField: 'stars',
+					label: 'Most likes',
+					dataField: 'nlikes',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Fewest Stars',
-					dataField: 'stars',
+					label: 'Fewest likes',
+					dataField: 'nlikes',
 					sortBy: 'asc',
 				},
 				{
-					label: 'Most Forks',
-					dataField: 'forks',
+					label: 'Most Replies',
+					dataField: 'nreplies',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Fewest Forks',
-					dataField: 'forks',
+					label: 'Fewest Replies',
+					dataField: 'nreplies',
 					sortBy: 'asc',
 				},
+
 				{
-					label: 'A to Z',
-					dataField: 'owner.keyword',
-					sortBy: 'asc',
-				},
-				{
-					label: 'Z to A',
-					dataField: 'owner.keyword',
+					label: 'Most Retweet',
+					dataField: 'nretweets',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Recently Updated',
-					dataField: 'pushed',
-					sortBy: 'desc',
-				},
-				{
-					label: 'Least Recently Updated',
-					dataField: 'pushed',
+					label: 'Fewest Retweet',
+					dataField: 'nretweets',
 					sortBy: 'asc',
-				},
+				}
 			]}
 		/>
 	</div>
 );
 
 Results.propTypes = {
-	toggleTopic: PropTypes.func,
-	currentTopics: PropTypes.arrayOf(PropTypes.string),
+	toggleHashtag: PropTypes.func,
+	currentHashtags: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Results;

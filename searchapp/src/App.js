@@ -11,23 +11,23 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentTopics: [],
+			currentHashtags: [],
 		};
 	}
 
-	setTopics = (currentTopics) => {
+	setHashtags = (currentHashtags) => {
 		this.setState({
-			currentTopics: currentTopics || [],
+			currentHashtags: currentHashtags || [],
 		});
 	}
 
-	toggleTopic = (topic) => {
-		const { currentTopics } = this.state;
-		const nextState = currentTopics.includes(topic)
-			? currentTopics.filter(item => item !== topic)
-			: currentTopics.concat(topic);
+	toggleHashtag = (hashtag) => {
+		const { currentHashtags } = this.state;
+		const nextState = currentHashtags.includes(hashtag)
+			? currentHashtags.filter(item => item !== hashtag)
+			: currentHashtags.concat(hashtag);
 		this.setState({
-			currentTopics: nextState,
+			currentHashtags: nextState,
 		});
 	}
 
@@ -40,24 +40,24 @@ class App extends Component {
 					theme={theme}
 				>
 					<div className="flex row-reverse app-container">
-						<Header currentTopics={this.state.currentTopics} setTopics={this.setTopics} />
+						<Header currentHashtags={this.state.currentHashtags} setHashtags={this.setHashtags} />
 						<div className="results-container">
 							<DataSearch
 								componentId="tweet"
 								filterLabel="Search"
-								dataField={['name', 'tweet', 'name.keyword', 'link', 'username', 'hashtags']}
+								dataField={['name', 'tweet', 'link', 'username', 'hashtags']}
 								placeholder="Search tweets"
 								iconPosition="left"
 								autosuggest={true}
 								fuzziness={0}
-  							debounce={50}
+  							    debounce={50}
 								URLParams
 								className="data-search-container results-container"
 								innerClass={{
 									input: 'search-input',
 								}}
 							/>
-							<Results currentTopics={this.state.currentTopics} toggleTopic={this.toggleTopic} />
+							<Results currentHashtags={this.state.currentHashtags} toggleHashtag={this.toggleHashtag} />
 						</div>
 					</div>
 				</ReactiveBase>

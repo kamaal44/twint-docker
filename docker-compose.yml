@@ -5,6 +5,8 @@ services:
   twint:
     build: .
     container_name: twint
+    volumes:
+    - './twint:/opt/twint'
     # command: ["-h"]
 
   searchapp:
