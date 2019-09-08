@@ -34,8 +34,8 @@ class App extends Component {
     return (
       //credentials shown here are read only so no security issues
       <ReactiveBase
-        app="social-media"
-        credentials= "wwmU5hu0p:8ef8c078-746d-4435-82a2-529726c17327"
+        app="twinttweets"
+        url="http://localhost:9200"
         // for non-appbaseIO hosted instancesurl= "https://wwmU5hu0p:8ef8c078-746d-4435-82a2-529726c17327@scalr.api.appbase.io"
         theme={{
           typography: {

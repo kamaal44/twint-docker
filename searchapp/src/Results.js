@@ -11,7 +11,7 @@ const onResultStats = (results, time) => (
 );
 
 const onData = (data, currentHashtags, toggleHashtag) => (
-	<div className="result-item" key={data.username}>
+	<div className="result-item" key={data.id}>
 		<div className="flex justify-center align-center result-card-header">
 			<a className="link" href={data.link} target="_blank" rel="noopener noreferrer">
 				<div className="flex wrap">
@@ -52,10 +52,7 @@ const Results = ({ toggleHashtag, currentHashtags }) => (
 			onData={data => onData(data, currentHashtags, toggleHashtag)}
 			onResultStats={onResultStats}
 			react={{
-				and: [		'hashtags',
-							'date',
-							'created_at',
-							'nlikes',
+				and: [		'nlikes',
 							'nreplies',
 							'nretweets'],
 			}}
