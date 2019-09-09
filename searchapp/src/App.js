@@ -43,9 +43,9 @@ class App extends Component {
 						<Header currentTopics={this.state.currentTopics} setTopics={this.setTopics} />
 						<div className="results-container">
 							<DataSearch
-								componentId="tweet"
+								componentId="tw"
 								filterLabel="Search"
-								dataField={['name', 'tweet', 'username', 'date', 'retwert', 'nlikes', 'nretweets', 'nreplies', 'video', 'created_at', 'url', 'hashtags']}
+								dataField={['name', 'tweet', 'username', 'date', 'retweet', 'video', 'url', 'hashtags']}
 								placeholder="Search tweets"
 								iconPosition="left"
 								autosuggest={true}

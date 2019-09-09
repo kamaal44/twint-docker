@@ -21,6 +21,7 @@ const onData = (data, currentTopics, toggleTopic) => (
 			</a>
 		</div>
 		<div className="m10-0">{data.tweet}</div>
+		<div className="m10-0">{data.date}</div>
 		<div className="flex wrap justify-center">
 			{
 				data.hashtags.slice(0, 7)
@@ -48,12 +49,11 @@ const Results = ({ toggleTopic, currentTopics }) => (
 		<SelectedFilters className="m1" />
 		<ReactiveList
 			componentId="results"
-			dataField="id"
+			dataField="tw"
 			renderItem={data => onData(data, currentTopics, toggleTopic)}
 			onResultStats={onResultStats}
 			react={{
-				and: ['date',
-							'created_at',
+				and: [		'date',
 							'nretweets',
 							'nreplies',
 							'nlikes'],

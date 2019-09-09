@@ -10,14 +10,29 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 	<div className={`flex column filters-container ${!visible ? 'hidden' : ''}`}>
 		<div className="child m10">
 			<MultiDropdownList
+				componentId="username"
+				dataField="username.keyword"
+				placeholder="Select username"
+				title="Username"
+				filterLabel="Username"
+				size={100}
+				showCount={true}
+				showFilter={true}
+				loader="Loading ..."
+			/>
+		</div>
+		<div className="child m10">
+			<MultiDropdownList
 				componentId="hashtags"
 				dataField="hashtags.keyword"
 				placeholder="Select hashtags"
 				title="Tweet Hashtags"
 				filterLabel="Hashtags"
-				size={1000}
+				showFilter={true}
+				size={100}
 				queryFormat="and"
 				onValueChange={setTopics}
+				loader="Loading ..."
 			/>
 		</div>
 		<div className="child m10">
@@ -36,8 +51,8 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		</div>
 		<div className="child m10">
 			<SingleDropdownRange
-				componentId="created_at"
-				dataField="created_at"
+				componentId="date"
+				dataField="date"
 				placeholder="Tweet created"
 				title="Created"
 				filterLabel="Created"
@@ -131,11 +146,11 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				componentId="nreplies"
 				title="Tweet replies"
 				dataField="nreplies"
-				range={{ start: 0, end: 180500 }}
+				range={{ start: 0, end: 300000 }}
 				showHistogram={false}
 				rangeLabels={{
 					start: '0 Replies',
-					end: '180K Replies',
+					end: '300K Replies',
 				}}
 				innerClass={{
 					label: 'range-label',
@@ -147,11 +162,11 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				componentId="nretweets"
 				title="Re-Tweets"
 				dataField="nretweets"
-				range={{ start: 0, end: 180500 }}
+				range={{ start: 0, end: 300000 }}
 				showHistogram={false}
 				rangeLabels={{
 					start: '0 Re-Tweets',
-					end: '180K Re-Tweets',
+					end: '300K Re-Tweets',
 				}}
 				innerClass={{
 					label: 'range-label',

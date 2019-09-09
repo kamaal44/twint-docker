@@ -3,3 +3,4 @@ extras/
 extras/*
 extras/**
 .DS_Store
+/node_modules/

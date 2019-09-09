@@ -8,7 +8,7 @@ class Topic extends Component {
 	render() {
 		return (
 			<div className={`topic ${this.props.active ? 'active' : ''}`} onClick={this.handleClick}>
-				#{this.props.children}
+				{this.props.children}
 			</div>
 		);
 	}
