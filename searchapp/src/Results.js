@@ -53,7 +53,8 @@ const Results = ({ toggleTopic, currentTopics }) => (
 			renderItem={data => onData(data, currentTopics, toggleTopic)}
 			onResultStats={onResultStats}
 			react={{
-				and: [		'date',
+				and: [		'retweet',
+							'date',
 							'nretweets',
 							'nreplies',
 							'nlikes'],
@@ -65,7 +66,7 @@ const Results = ({ toggleTopic, currentTopics }) => (
 				resultsInfo: 'result-list-info',
 				poweredBy: 'powered-by',
 			}}
-			size={6}
+			size={9}
 			sortOptions={[
 				{
 					label: 'Best Match',

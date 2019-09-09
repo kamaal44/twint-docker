@@ -11,7 +11,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		<div className="child m10">
 			<MultiDropdownList
 				componentId="username"
-				dataField="username.keyword"
+				dataField="username"
 				placeholder="Select username"
 				title="Username"
 				filterLabel="Username"
@@ -24,9 +24,9 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		<div className="child m10">
 			<MultiDropdownList
 				componentId="hashtags"
-				dataField="hashtags.keyword"
+				dataField="hashtags"
 				placeholder="Select hashtags"
-				title="Tweet Hashtags"
+				title="Hashtags"
 				filterLabel="Hashtags"
 				showFilter={true}
 				size={100}
