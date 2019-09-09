@@ -2,7 +2,7 @@ import React from 'react';
 import { SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
-import Hashtag from './Hashtag';
+import Topic from './Topic';
 
 const onResultStats = (results, time) => (
 	<div className="flex justify-end">
@@ -10,51 +10,56 @@ const onResultStats = (results, time) => (
 	</div>
 );
 
-const onData = (data, currentHashtags, toggleHashtag) => (
-	<div className="result-item" key={data.id}>
+const onData = (data, currentTopics, toggleTopic) => (
+	<div className="result-item" key={data.fullname}>
 		<div className="flex justify-center align-center result-card-header">
-			<a className="link" href={data.link} target="_blank" rel="noopener noreferrer">
+			<img className="avatar" src={data.avatar} alt="User avatar" />
+			<a className="link" href={data.URL} target="_blank" rel="noopener noreferrer">
 				<div className="flex wrap">
-					<div>{data.username}/</div>
+					<div>{data.owner}/</div>
 					<div>{data.name}</div>
 				</div>
 			</a>
 		</div>
-		<div className="m10-0">{data.tweet}</div>
+		<div className="m10-0">{data.description}</div>
 		<div className="flex wrap justify-center">
 			{
-				data.hashtags.slice(0, 7)
+				data.topics.slice(0, 7)
 					.map(item => (
-						<Hashtag
+						<Topic
 							key={item}
-							active={currentHashtags.includes(item)}
-							toggleHashtag={toggleHashtag}
+							active={currentTopics.includes(item)}
+							toggleTopic={toggleTopic}
 						>
 							{item}
-						</Hashtag>
+						</Topic>
 					))
 			}
 		</div>
 		<div className="flex">
-			<div><div className="btn card-btn"><i className="card-icon fas fa-star" />{data.nlikes}</div></div>
-			<div><div className="btn card-btn"><i className="card-icon fas fa-code-branch" />{data.nreplies}</div></div>
-			<div><div className="btn card-btn"><i className="card-icon fas fa-eye" />{data.nretweets}</div></div>
+			<div><div className="btn card-btn"><i className="card-icon fas fa-star" />{data.stars}</div></div>
+			<div><div className="btn card-btn"><i className="card-icon fas fa-code-branch" />{data.forks}</div></div>
+			<div><div className="btn card-btn"><i className="card-icon fas fa-eye" />{data.watchers}</div></div>
 		</div>
 	</div>
 );
 
-const Results = ({ toggleHashtag, currentHashtags }) => (
+const Results = ({ toggleTopic, currentTopics }) => (
 	<div className="result-list">
 		<SelectedFilters className="m1" />
 		<ReactiveList
 			componentId="results"
-			dataField="id"
-			onData={data => onData(data, currentHashtags, toggleHashtag)}
+			dataField="name"
+			renderItem={data => onData(data, currentTopics, toggleTopic)}
 			onResultStats={onResultStats}
 			react={{
-				and: [		'nlikes',
-							'nreplies',
-							'nretweets'],
+				and: ['language',
+							'topics',
+							'pushed',
+							'created',
+							'stars',
+							'forks',
+							'repo'],
 			}}
 			pagination
 			innerClass={{
@@ -71,44 +76,53 @@ const Results = ({ toggleHashtag, currentHashtags }) => (
 					sortBy: 'desc',
 				},
 				{
-					label: 'Most likes',
-					dataField: 'nlikes',
+					label: 'Most Stars',
+					dataField: 'stars',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Fewest likes',
-					dataField: 'nlikes',
+					label: 'Fewest Stars',
+					dataField: 'stars',
 					sortBy: 'asc',
 				},
 				{
-					label: 'Most Replies',
-					dataField: 'nreplies',
+					label: 'Most Forks',
+					dataField: 'forks',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Fewest Replies',
-					dataField: 'nreplies',
+					label: 'Fewest Forks',
+					dataField: 'forks',
 					sortBy: 'asc',
 				},
-
 				{
-					label: 'Most Retweet',
-					dataField: 'nretweets',
+					label: 'A to Z',
+					dataField: 'owner.keyword',
+					sortBy: 'asc',
+				},
+				{
+					label: 'Z to A',
+					dataField: 'owner.keyword',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Fewest Retweet',
-					dataField: 'nretweets',
+					label: 'Recently Updated',
+					dataField: 'pushed',
+					sortBy: 'desc',
+				},
+				{
+					label: 'Least Recently Updated',
+					dataField: 'pushed',
 					sortBy: 'asc',
-				}
+				},
 			]}
 		/>
 	</div>
 );
 
 Results.propTypes = {
-	toggleHashtag: PropTypes.func,
-	currentHashtags: PropTypes.arrayOf(PropTypes.string),
+	toggleTopic: PropTypes.func,
+	currentTopics: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Results;
