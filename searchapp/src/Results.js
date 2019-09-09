@@ -11,20 +11,19 @@ const onResultStats = (results, time) => (
 );
 
 const onData = (data, currentTopics, toggleTopic) => (
-	<div className="result-item" key={data.fullname}>
+	<div className="result-item" key={data.id}>
 		<div className="flex justify-center align-center result-card-header">
-			<img className="avatar" src={data.avatar} alt="User avatar" />
-			<a className="link" href={data.URL} target="_blank" rel="noopener noreferrer">
+			<a className="link" href={data.url} target="_blank" rel="noopener noreferrer">
 				<div className="flex wrap">
-					<div>{data.owner}/</div>
+					<div>{data.username}/</div>
 					<div>{data.name}</div>
 				</div>
 			</a>
 		</div>
-		<div className="m10-0">{data.description}</div>
+		<div className="m10-0">{data.tweet}</div>
 		<div className="flex wrap justify-center">
 			{
-				data.topics.slice(0, 7)
+				data.hashtags.slice(0, 7)
 					.map(item => (
 						<Topic
 							key={item}
@@ -37,9 +36,9 @@ const onData = (data, currentTopics, toggleTopic) => (
 			}
 		</div>
 		<div className="flex">
-			<div><div className="btn card-btn"><i className="card-icon fas fa-star" />{data.stars}</div></div>
-			<div><div className="btn card-btn"><i className="card-icon fas fa-code-branch" />{data.forks}</div></div>
-			<div><div className="btn card-btn"><i className="card-icon fas fa-eye" />{data.watchers}</div></div>
+			<div><div className="btn card-btn"><i className="card-icon fas fa-star" />{data.nlikes}</div></div>
+			<div><div className="btn card-btn"><i className="card-icon fas fa-code-branch" />{data.nreplies}</div></div>
+			<div><div className="btn card-btn"><i className="card-icon fas fa-eye" />{data.nretweets}</div></div>
 		</div>
 	</div>
 );
@@ -49,17 +48,15 @@ const Results = ({ toggleTopic, currentTopics }) => (
 		<SelectedFilters className="m1" />
 		<ReactiveList
 			componentId="results"
-			dataField="name"
+			dataField="id"
 			renderItem={data => onData(data, currentTopics, toggleTopic)}
 			onResultStats={onResultStats}
 			react={{
-				and: ['language',
-							'topics',
-							'pushed',
-							'created',
-							'stars',
-							'forks',
-							'repo'],
+				and: ['date',
+							'created_at',
+							'nretweets',
+							'nreplies',
+							'nlikes'],
 			}}
 			pagination
 			innerClass={{
@@ -76,43 +73,43 @@ const Results = ({ toggleTopic, currentTopics }) => (
 					sortBy: 'desc',
 				},
 				{
-					label: 'Most Stars',
-					dataField: 'stars',
+					label: 'Most Likes',
+					dataField: 'nlikes',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Fewest Stars',
-					dataField: 'stars',
+					label: 'Fewest Likes',
+					dataField: 'nlikes',
 					sortBy: 'asc',
 				},
 				{
-					label: 'Most Forks',
-					dataField: 'forks',
+					label: 'Most Replies',
+					dataField: 'nreplies',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Fewest Forks',
-					dataField: 'forks',
+					label: 'Fewest Replies',
+					dataField: 'nreplies',
 					sortBy: 'asc',
 				},
 				{
 					label: 'A to Z',
-					dataField: 'owner.keyword',
+					dataField: 'name.keyword',
 					sortBy: 'asc',
 				},
 				{
 					label: 'Z to A',
-					dataField: 'owner.keyword',
+					dataField: 'name.keyword',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Recently Updated',
-					dataField: 'pushed',
+					label: 'Most likes',
+					dataField: 'nlikes',
 					sortBy: 'desc',
 				},
 				{
-					label: 'Least Recently Updated',
-					dataField: 'pushed',
+					label: 'Least Likes',
+					dataField: 'nlikes',
 					sortBy: 'asc',
 				},
 			]}

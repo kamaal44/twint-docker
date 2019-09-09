@@ -35,7 +35,7 @@ class App extends Component {
 		return (
 			<section className="container">
 				<ReactiveBase
-					app="limo"
+					app="twinttweets"
 					url="http://localhost:9200"
 					theme={theme}
 				>
@@ -43,14 +43,14 @@ class App extends Component {
 						<Header currentTopics={this.state.currentTopics} setTopics={this.setTopics} />
 						<div className="results-container">
 							<DataSearch
-								componentId="repo"
+								componentId="tweet"
 								filterLabel="Search"
-								dataField={['name', 'description', 'name.keyword', 'fullname', 'owner', 'topics']}
-								placeholder="Search packages"
+								dataField={['name', 'tweet', 'username', 'date', 'retwert', 'nlikes', 'nretweets', 'nreplies', 'video', 'created_at', 'url', 'hashtags']}
+								placeholder="Search tweets"
 								iconPosition="left"
 								autosuggest={true}
 								fuzziness={0}
-  							debounce={50}
+  								debounce={50}
 								URLParams
 								className="data-search-container results-container"
 								innerClass={{

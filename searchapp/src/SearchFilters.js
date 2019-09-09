@@ -10,20 +10,11 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 	<div className={`flex column filters-container ${!visible ? 'hidden' : ''}`}>
 		<div className="child m10">
 			<MultiDropdownList
-				componentId="language"
-				dataField="language.keyword"
-				placeholder="Select languages"
-				title="Language"
-				filterLabel="Language"
-			/>
-		</div>
-		<div className="child m10">
-			<MultiDropdownList
-				componentId="topics"
-				dataField="topics.keyword"
-				placeholder="Select topics"
-				title="Repo Topics"
-				filterLabel="Topics"
+				componentId="hashtags"
+				dataField="hashtags.keyword"
+				placeholder="Select hashtags"
+				title="Tweet Hashtags"
+				filterLabel="Hashtags"
 				size={1000}
 				queryFormat="and"
 				onValueChange={setTopics}
@@ -31,9 +22,9 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		</div>
 		<div className="child m10">
 			<SingleDropdownRange
-				componentId="pushed"
-				dataField="pushed"
-				placeholder="Repo last active"
+				componentId="date"
+				dataField="date"
+				placeholder="Latest tweets"
 				title="Last Active"
 				filterLabel="Last Active"
 				data={[
@@ -45,12 +36,22 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		</div>
 		<div className="child m10">
 			<SingleDropdownRange
-				componentId="created"
-				dataField="created"
-				placeholder="Repo created"
+				componentId="created_at"
+				dataField="created_at"
+				placeholder="Tweet created"
 				title="Created"
 				filterLabel="Created"
 				data={[
+					{
+						start: '2019-01-01T00:00:00Z',
+						end: '2019-12-31T23:59:59Z',
+						label: '2019',
+					},
+					{
+						start: '2018-01-01T00:00:00Z',
+						end: '2018-12-31T23:59:59Z',
+						label: '2018',
+					},
 					{
 						start: '2017-01-01T00:00:00Z',
 						end: '2017-12-31T23:59:59Z',
@@ -111,14 +112,14 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		</div>
 		<div className="child m10">
 			<RangeSlider
-				componentId="stars"
-				title="Repo Stars"
-				dataField="stars"
+				componentId="nlikes"
+				title="Tweet likes"
+				dataField="nlikes"
 				range={{ start: 0, end: 300000 }}
 				showHistogram={false}
 				rangeLabels={{
-					start: '0 Stars',
-					end: '300K Stars',
+					start: '0 Likes',
+					end: '300K Likes',
 				}}
 				innerClass={{
 					label: 'range-label',
@@ -127,14 +128,30 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		</div>
 		<div className="child m10">
 			<RangeSlider
-				componentId="forks"
-				title="Repo Forks"
-				dataField="forks"
+				componentId="nreplies"
+				title="Tweet replies"
+				dataField="nreplies"
 				range={{ start: 0, end: 180500 }}
 				showHistogram={false}
 				rangeLabels={{
-					start: '0 Forks',
-					end: '180K Forks',
+					start: '0 Replies',
+					end: '180K Replies',
+				}}
+				innerClass={{
+					label: 'range-label',
+				}}
+			/>
+		</div>
+		<div className="child m10">
+			<RangeSlider
+				componentId="nretweets"
+				title="Re-Tweets"
+				dataField="nretweets"
+				range={{ start: 0, end: 180500 }}
+				showHistogram={false}
+				rangeLabels={{
+					start: '0 Re-Tweets',
+					end: '180K Re-Tweets',
 				}}
 				innerClass={{
 					label: 'range-label',

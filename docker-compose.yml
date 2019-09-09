@@ -4,10 +4,12 @@ services:
 
   twint:
     build: .
+    #  context: ./twint
+    #  dockerfile: Dockerfile
     container_name: twint
     volumes:
-    - './twint:/opt/twint'
-    # command: ["-h"]
+    - './samples:/opt/twint'
+    command: ["-h"]
 
   searchapp:
     build:
@@ -48,7 +50,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-    - esdata02:/usr/share/elasticsearch/data
+    - esdata01:/usr/share/elasticsearch/data
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.0.1
@@ -57,7 +59,7 @@ services:
       - 5601:5601
 
 volumes:
-  esdata02:
+  esdata01:
     driver: local
 
 networks:

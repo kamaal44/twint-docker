@@ -4,3 +4,4 @@ RUN apk add --no-cache --no-progress git subversion gcc python-dev build-base li
 RUN pip3 install --upgrade -e git+https://github.com/twintproject/twint.git@origin/master#egg=twint
 RUN rm -rf /root/.cache
 ENTRYPOINT [ "twint" ]
+
