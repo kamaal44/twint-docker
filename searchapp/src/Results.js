@@ -49,15 +49,15 @@ const Results = ({ toggleTopic, currentTopics }) => (
 		<SelectedFilters className="m1" />
 		<ReactiveList
 			componentId="results"
-			dataField="tw"
+			dataField="tweet"
 			renderItem={data => onData(data, currentTopics, toggleTopic)}
 			onResultStats={onResultStats}
 			react={{
-				and: [		'retweet',
-							'date',
-							'nretweets',
-							'nreplies',
-							'nlikes'],
+				and: [	'username',
+						'hashtags',
+						'nretweets',
+						'nreplies',
+						'nlikes'],
 			}}
 			pagination
 			innerClass={{
