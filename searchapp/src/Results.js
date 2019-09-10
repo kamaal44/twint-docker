@@ -54,10 +54,9 @@ const Results = ({ toggleTopic, currentTopics }) => (
 			onResultStats={onResultStats}
 			react={{
 				and: [	'username',
-						'hashtags',
-						'nretweets',
-						'nreplies',
-						'nlikes'],
+						'tweet',
+						'location',
+						'hashtags'],
 			}}
 			pagination
 			innerClass={{
@@ -66,7 +65,7 @@ const Results = ({ toggleTopic, currentTopics }) => (
 				resultsInfo: 'result-list-info',
 				poweredBy: 'powered-by',
 			}}
-			size={9}
+			size={12}
 			sortOptions={[
 				{
 					label: 'Best Match',
